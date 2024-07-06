@@ -8,7 +8,7 @@ const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
   return (
     <div className="shop-category">
-      <img src={props.banner} alt="" />
+      <img className="shopcategory-banner" src={props.banner} alt="" />
       <div className="shopcategory-indexSort">
         <p>
           <span>Showing 1-12</span> out of 36 products!
@@ -19,6 +19,7 @@ const ShopCategory = (props) => {
       </div>
       <div className="shopcategory-products">
         {all_product.map((item, i) => {
+          console.log(props.category, item.category);
           if (props.category === item.category) {
             return (
               <Item
@@ -35,6 +36,7 @@ const ShopCategory = (props) => {
           }
         })}
       </div>
+      <div className="shopcategory-loadMore">Explore More</div>
     </div>
   );
 };
