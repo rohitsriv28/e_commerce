@@ -10,7 +10,7 @@ const Item = (props) => {
   return (
     <div className="item">
       <Link to={`/product/${props.id}`}>
-        <img src={props.image} alt="" onClick={handleImageClick}/>
+        <img src={props.image} alt="" onClick={handleImageClick} />
       </Link>
       <p>{props.name}</p>
       <div className="item-prices">
