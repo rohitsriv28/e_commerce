@@ -8,8 +8,8 @@ const AddProduct = () => {
     name: "",
     image: "",
     category: "men",
-    new_price: "",
-    old_price: "",
+    newPrice: "",
+    oldPrice: "",
   });
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
@@ -39,6 +39,16 @@ const AddProduct = () => {
     if (responseData.success) {
       product.image = responseData.image_url;
       console.log(product);
+      await fetch("http://localhost:4040/addProduct", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify(product)
+      }).then((resp)=>resp.json()).then((data)=>{
+        data.success?alert("Product Added"):alert("Failed to add product!")
+      });
     }
   };
 
@@ -58,20 +68,20 @@ const AddProduct = () => {
         <div className="addProduct-itemFields">
           <p>Price</p>
           <input
-            value={productDetails.old_price}
+            value={productDetails.oldPrice}
             onChange={changeHandler}
             type="text"
-            name="old_price"
+            name="oldPrice"
             placeholder="Product Price"
           />
         </div>
         <div className="addProduct-itemFields">
           <p>Offer Price</p>
           <input
-            value={productDetails.new_price}
+            value={productDetails.newPrice}
             onChange={changeHandler}
             type="text"
-            name="new_price"
+            name="newPrice"
             placeholder="Product Offer Price"
           />
         </div>
