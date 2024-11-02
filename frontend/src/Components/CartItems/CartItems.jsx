@@ -4,7 +4,7 @@ import { ShopContext } from "../../Context/ShopContext";
 import removeIcon from "../Assests/cart_cross_icon.png";
 
 const CartItems = () => {
-  const { all_product, cartItem, removeFromCart, getTotalCartAmount } =
+  const { allProduct, cartItem, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
 
   return (
@@ -18,16 +18,16 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
+      {allProduct.map((e) => {
         if (cartItem[e.id] > 0) {
           return (
             <div key={e.id}>
               <div className="cartItems-format cartItems-format-main">
                 <img src={e.image} alt="" className="cartItems-product-image" />
                 <p>{e.name}</p>
-                <p>${e.new_price}</p>
+                <p>&#8377;{e.newPrice}</p>
                 <button className="cartItems-quantity">{cartItem[e.id]}</button>
-                <p>${e.new_price * cartItem[e.id]}</p>
+                <p>&#8377;{e.newPrice * cartItem[e.id]}</p>
                 <img
                   src={removeIcon}
                   alt=""
@@ -48,7 +48,7 @@ const CartItems = () => {
             <div className="cartItems-totalItems">
               <p>Subtotal</p>
               <p>
-                {"\u20B9"}
+              &#8377;
                 {getTotalCartAmount()}
               </p>
             </div>
@@ -61,7 +61,7 @@ const CartItems = () => {
             <div className="cartItems-totalItems">
               <h3>Total</h3>
               <h3>
-                {"\u20B9"}
+              &#8377;
                 {getTotalCartAmount()}
               </h3>
             </div>

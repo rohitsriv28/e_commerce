@@ -5,9 +5,9 @@ import dropdown from "../Components/Assests/dropdown_icon.png";
 import Item from "../Components/Items/Item";
 
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext);
+  const { allProduct } = useContext(ShopContext);
 
-  const filteredProducts = all_product.filter(item => item.category === props.category);
+  const filteredProducts = allProduct.filter(item => item.category === props.category);
 
   return (
     <div className="shop-category">
@@ -27,8 +27,8 @@ const ShopCategory = (props) => {
             id={item.id}
             name={item.name}
             image={item.image}
-            new_price={item.new_price}
-            old_price={item.old_price}
+            newPrice={item.newPrice}
+            oldPrice={item.oldPrice}
           />
         ))}
       </div>

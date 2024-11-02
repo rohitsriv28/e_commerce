@@ -14,8 +14,8 @@ const Item = (props) => {
       </Link>
       <p>{props.name}</p>
       <div className="item-prices">
-        <div className="item-price-new">${props.new_price}</div>
-        <div className="item-price-old">${props.old_price}</div>
+        <div className="item-price-new">&#8377;{props.newPrice}</div>
+        <div className="item-price-old">&#8377;{props.oldPrice}</div>
       </div>
     </div>
   );
