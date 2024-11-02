@@ -1,20 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 
 const LoginSignup = () => {
+  const [state, setState] = useState("Login");
+  const login = async () => {
+    console.log("Logged In")
+  };
+  const signup = async () => {
+    console.log("Signed Up")
+  };
   return (
     <div className="loginSignup">
       <div className="loginSignup-container">
-        <h1>Sign Up</h1>
+        <h1>{state}</h1>
         <div className="loginSignup-fields">
-          <input type="text" placeholder="Your Name" />
+          {state === "Sign Up" ? (
+            <input type="text" placeholder="Your Name" />
+          ) : (
+            <></>
+          )}
           <input type="email" placeholder="Email Address" />
           <input type="password" placeholder="Password" />
         </div>
-        <button>Continue</button>
-        <p className="loginSignup-login">
-          Already have an account? <span>Login Here</span>
-        </p>
+        <button
+          onClick={() => {
+            state === "Login" ? login() : signup();
+          }}
+        >
+          Continue
+        </button>
+        {state === "Sign Up" ? (
+          <p className="loginSignup-login">
+            Already have an account?{" "}
+            <span
+              onClick={() => {
+                setState("Login");
+              }}
+            >
+              Login Here
+            </span>
+          </p>
+        ) : (
+          <p className="loginSignup-login">
+            Not registered yet?{" "}
+            <span
+              onClick={() => {
+                setState("Sign Up");
+              }}
+            >
+              Signup Here
+            </span>
+          </p>
+        )}
         <div className="loginSignup-agree">
           <input type="checkbox" name="" id="" />
           <p>By continuing, I agree to the terms of use & privacy policy.</p>

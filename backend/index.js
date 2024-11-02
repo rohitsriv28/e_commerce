@@ -142,5 +142,75 @@ app.post("/removeProduct", async (request, response) => {
 app.get("/allProducts", async (request, response) => {
   let products = await Product.find({});
   console.log("All products fetched!");
-  response.send(products)
+  response.send(products);
+});
+
+//Schema for User Model
+const Users = mongoose.model("Users", {
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: {
+    type: String,
+  },
+  cartData: {
+    type: Object,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+//API for User Registration
+app.post("/signup", async (request, response) => {
+  let check = await Users.findOne({ email: request.body.email });
+  if (check) {
+    return response
+      .status(400)
+      .json({ success: false, error: "Email already in use." });
+  }
+  let cart = {};
+  for (let i = 0; i < 300; i++) {
+    cart[i] = 0;
+  }
+  const user = new Users({
+    name: request.body.username,
+    email: request.body.email,
+    password: request.body.password,
+    cartData: cart,
+  });
+  await user.save();
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+  const token = jwt.sign(data, "secret_ecomm");
+  response.json({ success: true, token });
+});
+
+//API for User Login
+app.post("/login", async (request, response) => {
+  let user = await Users.findOne({ email: request.body.email });
+  if (user) {
+    const passwordComparison = request.body.password == user.password;
+    if (passwordComparison) {
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const token = jwt.sign(data, "secret_ecomm");
+      response.json({success:true, token})
+    } else{
+      response.json({success:false, error:"Worng password."})
+    }
+  } else{
+    response.json({success:false, error:"Email not registered."})
+  }
 });
