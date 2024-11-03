@@ -2,12 +2,12 @@ const port = 4040;
 
 const express = require("express");
 const app = express();
-const { error } = require("console");
-const cors = require("cors");
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
+const { error } = require("console");
 const { type } = require("os");
 
 app.use(express.json());
@@ -258,6 +258,13 @@ app.post("/remove/cart", fetchUser, async (request, response) => {
     { cartData: userData.cartData }
   );
   response.send("Removed");
+});
+
+//API to Get Cart Data on Login
+app.post("/getCart", fetchUser, async (request, response) => {
+  console.log("Get Cart");
+  let userData = await Users.findOne({ _id: request.user.id });
+  response.json(userData.cartData);
 });
 
 //API for New Collection Data
