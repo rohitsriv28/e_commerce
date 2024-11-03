@@ -32,10 +32,10 @@ const ProductDisplay = (props) => {
         </div>
         <div className="productDisplay-righ-prices">
           <div className="productDisplay-right-price-old">
-          &#8377;{product.oldPrice}
+            &#8377;{product.oldPrice}
           </div>
           <div className="productDisplay-right-price-new">
-          &#8377;{product.newPrice}
+            &#8377;{product.newPrice}
           </div>
         </div>
         <div className="productDisplay-right-description">

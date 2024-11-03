@@ -7,7 +7,9 @@ import Item from "../Components/Items/Item";
 const ShopCategory = (props) => {
   const { allProduct } = useContext(ShopContext);
 
-  const filteredProducts = allProduct.filter(item => item.category === props.category);
+  const filteredProducts = allProduct.filter(
+    (item) => item.category === props.category
+  );
 
   return (
     <div className="shop-category">

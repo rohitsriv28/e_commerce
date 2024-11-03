@@ -53,21 +53,21 @@
   cursor: pointer;
 }
 
-@media(max-width:800px){
-    .product-list{
-        box-sizing: border-box;
-        width: 95%;
-        height: 100%;
-        padding: 10px 30px;
-        margin: 20px auto;
-    }
-    .productList-format-main{
-        padding: 15px 0px;
-        color: #454545;
-        font-size: 12px;
-    }
-    .productList-productIcon{
-        height: 60px;
-        width: 60px;
-    }
+@media (max-width: 800px) {
+  .product-list {
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 10px 30px;
+    margin: 20px auto;
+  }
+  .productList-format-main {
+    padding: 15px 0px;
+    color: #454545;
+    font-size: 12px;
+  }
+  .productList-productIcon {
+    height: 60px;
+    width: 60px;
+  }
 }
