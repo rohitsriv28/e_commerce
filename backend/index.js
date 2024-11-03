@@ -215,10 +215,49 @@ app.post("/login", async (request, response) => {
   }
 });
 
-//API for Cart Data
-app.post("/addToCart", async (request, response) => {
-  console.log("Request received at /addToCart:", request.body);
-  response.json({ message: "Received" });
+//Creating Middleware to Fetch User
+const fetchUser = async (request, response, next) => {
+  const token = request.header("auth-token");
+  if (!token) {
+    response
+      .status(401)
+      .send({ error: "Please authenticate with valid token" });
+  } else {
+    try {
+      const data = jwt.verify(token, "secret_ecomm");
+      request.user = data.user;
+      next();
+    } catch (error) {
+      response
+        .status(401)
+        .send({ error: "Please authenticate with valid token" });
+    }
+  }
+};
+
+//API for Adding Products in Cart Data
+app.post("/add/cart", fetchUser, async (request, response) => {
+  console.log("Added:", request.body.itemId);
+  let userData = await Users.findOne({ _id: request.user.id });
+  userData.cartData[request.body.itemId] += 1;
+  await Users.findOneAndUpdate(
+    { _id: request.user.id },
+    { cartData: userData.cartData }
+  );
+  response.send("Added");
+});
+
+//API for Removing Product from Cart Data
+app.post("/remove/cart", fetchUser, async (request, response) => {
+  console.log("Removed:", request.body.itemId);
+  let userData = await Users.findOne({ _id: request.user.id });
+  if (userData.cartData[request.body.itemId] > 0)
+    userData.cartData[request.body.itemId] -= 1;
+  await Users.findOneAndUpdate(
+    { _id: request.user.id },
+    { cartData: userData.cartData }
+  );
+  response.send("Removed");
 });
 
 //API for New Collection Data
