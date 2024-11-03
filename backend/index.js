@@ -206,11 +206,33 @@ app.post("/login", async (request, response) => {
         },
       };
       const token = jwt.sign(data, "secret_ecomm");
-      response.json({success:true, token})
-    } else{
-      response.json({success:false, error:"Worng password."})
+      response.json({ success: true, token });
+    } else {
+      response.json({ success: false, error: "Worng password." });
     }
-  } else{
-    response.json({success:false, error:"Email not registered."})
+  } else {
+    response.json({ success: false, error: "Email not registered." });
   }
+});
+
+//API for Cart Data
+app.post("/addToCart", async (request, response) => {
+  console.log("Request received at /addToCart:", request.body);
+  response.json({ message: "Received" });
+});
+
+//API for New Collection Data
+app.get("/newCollection", async (request, response) => {
+  let products = await Product.find({});
+  let newCollection = products.slice(1).slice(-8);
+  console.log("New Collection Fetched");
+  response.send(newCollection);
+});
+
+//API for Women's Popular Collection
+app.get("/popular/women", async (request, response) => {
+  let products = await Product.find({ category: "women" });
+  let popularInWomen = products.slice(0, 4);
+  console.log("Popular In Women Fetched!");
+  response.send(popularInWomen);
 });

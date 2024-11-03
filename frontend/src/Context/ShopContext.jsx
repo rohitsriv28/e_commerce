@@ -4,7 +4,7 @@ export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
   let cart = {};
-  for (let index = 0; index < 300+1; index++) {
+  for (let index = 0; index < 300 + 1; index++) {
     cart[index] = 0;
   }
   return cart;
@@ -13,14 +13,28 @@ const ShopContextProvider = (props) => {
   const [allProduct, setAllProduct] = useState([]);
   const [cartItem, setCartItem] = useState(getDefaultCart());
 
-  useEffect(()=>{
-    fetch('http://localhost:4040/allProducts').then((response)=>response.json()).then((data)=>setAllProduct(data))
-  },[])
-
+  useEffect(() => {
+    fetch("http://localhost:4040/allProducts")
+      .then((response) => response.json())
+      .then((data) => setAllProduct(data));
+  }, []);
 
   const addToCart = (itemId) => {
     setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    console.log(cartItem);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4040/addToCart", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId }),
+      })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error adding to cart:", error));      
+    }
   };
   const removeFromCart = (itemId) => {
     setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
