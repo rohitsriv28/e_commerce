@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+require("dotenv").config();
 const { error } = require("console");
 const { type } = require("os");
 
@@ -14,9 +15,13 @@ app.use(express.json());
 app.use(cors());
 
 //Database Connectio with MongoDB
-mongoose.connect(
-  "mongodb+srv://rohitraj:admin@ecommcluster.e2ab0.mongodb.net/e-commerce?retryWrites=true&w=majority&appName=EcommCluster"
-);
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log("MongoDB connection error:", error));
 
 //API Creation
 app.get("/", (request, response) => {
